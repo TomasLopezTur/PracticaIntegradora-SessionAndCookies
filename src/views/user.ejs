@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("partials/head") %>
+<body  class="<%- locals.user ? user.backgroundColor : null %>">
+	<%- include("partials/header") %>
+	
+	<main id="register">
+					<div class="container-fluid w-50 form-control text-center registro-form mt-5 mb-5">
+						<h6 class="p-4"><b> <%= name %>,  </b> gracias por visitarnos.</h6>
+						<a href="/user/reset" class="btn btn-danger ">Olvidar el color</a>
+					</div>
+					<img src="/images/wallpaper.jpg" width="45%" >
+    </main>
+
+	<%- include("partials/footer") %>
+</body>
+</html>
