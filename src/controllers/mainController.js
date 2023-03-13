@@ -4,6 +4,7 @@ module.exports = {
     index: (req, res) => {
         res.locals.user = req.session.user;
         res.render('index',{
+            old:req.body,
             session:req.session
         })
     },
@@ -23,9 +24,9 @@ module.exports = {
 
             /* cookie para mantener la cuenta abierta */
             
-            if (req.body.checkBox){
+            if (req.body.remember){
                 res.cookie(
-                    'color',
+                    "color",
                     req.session.user,
                     {
                         expires: new Date(Date.now() + times),
@@ -36,13 +37,7 @@ module.exports = {
             
             res.locals.user = req.session.user;
             
-            res.render('index',{
-                name,
-                backgroundColor,
-                email,
-                edad,
-                session:req.session
-            })
+            res.redirect('/')
         }else{
 
             
@@ -64,8 +59,10 @@ module.exports = {
     },
     resert: (req, res) => {
         req.session.destroy();
-        res.clearCookie('name');
-        res.clearCookie('backgroundColor');
+        if(req.cookies.color){
+            res.cookie("color", "", {maxAge: -1})
+        }
+
         res.redirect("/");
 
     },

@@ -6,6 +6,7 @@ const logger = require('morgan');
 const path = require('path');
 const methodOverride = require("method-override");
 const session = require("express-session");
+const checkCookie = require('./middleware/checkCookie');
 // ************ express() - (don't touch) ************
 const app = express();
 
@@ -14,13 +15,15 @@ app.use(express.static(path.join(__dirname, '../public')));  // Necesario para l
 app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(cookieParser());
+
 app.use(methodOverride("_method"));
 app.use(session({
-    secret: "artisticaDali",
+    secret: "color",
     resave: false,
     saveUninitialized: true
 }));
+app.use(cookieParser());
+app.use(checkCookie);
 // ************ Middlewares - (touch) ************
 /* const userLogs =require('./middleware/userLogs');
 app.use(userLogs); */
@@ -34,6 +37,7 @@ app.set('views', './src/views'); // Seteo de la ubicación de la carpeta "views"
 // ************ WRITE YOUR CODE FROM HERE ************
 // ************ Route System require and use() ************
 const mainRouter = require('./routes/main');
+const { cookie } = require('express-validator');
 app.use('/', mainRouter);
 
 
